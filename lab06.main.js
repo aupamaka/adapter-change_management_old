@@ -195,46 +195,16 @@ healthcheck(callback) {
      * get() takes a callback function.
      */
     const connector = new ServiceNowConnector(options);
-    this.connector.get((results, error) => {
-            let returnArray = new Array();
-            if (results === null) 
-            {
-                callback(results, error);
-            }
-            else if(results) {
-                if (results.body) {
-                    var resdata = JSON.parse(results.body);
-
-                    for (var i = 0; i < resdata.result.length; i++) {
-                        returnArray.push({
-                            change_ticket_number: resdata.result[i].number,
-                            active: resdata.result[i].active,
-                            priority: resdata.result[i].priority,
-                            description: resdata.result[i].description,
-                            work_start: resdata.result[i].work_start,
-                            work_end: resdata.result[i].work_end,
-                            change_ticket_key: resdata.result[i].sys_id,
-                        });
-                    };
-
-                    callback(returnArray, error);
-                    //log.info(`\nResponse returned after GET request:\n${returnArray}`);
-                }
-            } 
-        });
-    /*    
     const cb = (callback.results, callback.error);
     connector.get(cb => {
     if (error) {
         console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
     if (results) {
-        console.log(`\nResponse returned from GET request:\n${JSON.stringify(results)}`);
-
+        console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`);
     }
     }
     );
-    */
   }
 
   /**
@@ -254,40 +224,13 @@ healthcheck(callback) {
      * post() takes a callback function.
      */
     const connector = new ServiceNowConnector(options);
-    this.connector.post((results, error) => {
-            let result;
-             if (results === null)
-            {
-                callback(result, error);
-            } 
-            else if (results) {
-                if (results.body) {
-                    var returnData = JSON.parse(results.body);
-
-                    result = {
-                        change_ticket_number: returnData.result.number,
-                        active: returnData.result.active,
-                        priority: returnData.result.priority,
-                        description: returnData.result.description,
-                        work_start: returnData.result.work_start,
-                        work_end: returnData.result.work_end,
-                        change_ticket_key: returnData.result.sys_id
-                    };
-
-                    callback(result, error);
-                    //log.info(`\nResponse returned from Post request:\n${JSON.stringify(result)}`);
-                }
-            }
-    });
-    /*
     const cb = (callback.results, callback.error);
-    connector.post(options, cb => {
+    connector.get.post(options, cb => {
     if (error) {
         console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
         }
         console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`);
     });
-    */
   }
 }
 
