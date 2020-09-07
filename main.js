@@ -152,18 +152,17 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-    const options = {
-        url: 'https://dev76257.service-now.com/',
-        username: 'admin',
-        password: 'YdoU12no!',
-        serviceNowTable: 'change_request'
-    };
-    this.connector(options).getRecord((data, error) => {
+    const connector = new ServiceNowConnector(options);
+    const cb = (callback.results, callback.error);
+    connector.get(cb => {
     if (error) {
         console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-        }
+    }
+    if (results) {
         console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`);
-    });
+    }
+    }
+    );
   }
 
   /**
@@ -182,13 +181,9 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     const options = {
-        url: 'https://dev76257.service-now.com/',
-        username: 'admin',
-        password: 'YdoU12no!',
-        serviceNowTable: 'change_request'
-    };
-    this.connector(options).postRecord(options, (data, error) => {
+    const connector = new ServiceNowConnector(options);
+    const cb = (callback.results, callback.error);
+    connector.get.post(options, cb => {
     if (error) {
         console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
         }
