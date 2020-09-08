@@ -194,7 +194,6 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-    const connector = new ServiceNowConnector(options);
     this.connector.get((results, error) => {
             let returnArray = new Array();
             if (results === null) 
@@ -247,13 +246,6 @@ healthcheck(callback) {
    *   handles the response.
    */
   postRecord(callback) {
-    /**
-     * Write the body for this function.
-     * The function is a wrapper for this.connector's post() method.
-     * Note how the object was instantiated in the constructor().
-     * post() takes a callback function.
-     */
-    const connector = new ServiceNowConnector(options);
     this.connector.post((results, error) => {
             let result;
              if (results === null)
