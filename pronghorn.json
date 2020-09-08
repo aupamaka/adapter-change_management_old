@@ -39,7 +39,7 @@
         "description": "Post changes to Change tickets.",
         "input": [],
         "output": {
-            "name": "changeTicket",
+            "name": "changeTickets",
             "type": "object",
             "description": "A change ticket document.",
             "schema": {
