@@ -94,6 +94,8 @@ class ServiceNowAdapter extends EventEmitter {
  *   that handles the response.
  */
 healthcheck(callback) {
+    console.info("Here 1 - In healthcheck");
+    log.info("Here 2 - In healthcheck");
  this.getRecord((result, error) => {
    /**
     * For this lab, complete the if else conditional
@@ -101,8 +103,8 @@ healthcheck(callback) {
     * or the instance was hibernating. You must write
     * the blocks for each branch.
     */
-   let callbackError = null;
-   let callbackMessage = null;
+   //let callbackError = null;
+   //let callbackMessage = null;
 
    if (error) {
      /**
@@ -119,8 +121,8 @@ healthcheck(callback) {
       */
       this.emitOffline();
       console.error(`\nError returned from healthcheck:\n${this.id}--${JSON.stringify(error)}`);
-      callbackError=error;
-      callback(callbackMessage, callbackError);
+      //callbackError=error;
+      //callback(callbackMessage, callbackError);
 
    } else {
      /**
@@ -135,8 +137,8 @@ healthcheck(callback) {
       */
       this.emitOnline();
       console.info(`\nMessage returned from healthcheck:\n${this.id}--${JSON.stringify(result)}`);
-      callbackMessage=result;
-      callback(callbackMessage, callbackError);
+      //callbackMessage=result;
+      //callback(callbackMessage, callbackError);
    }
  });
 }
@@ -194,6 +196,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
+     console.info("In getRecord()");
     this.connector.get((results, error) => {
             let returnArray = new Array();
             if (results === null) 
@@ -217,7 +220,7 @@ healthcheck(callback) {
                     };
 
                     callback(returnArray, error);
-                    //log.info(`\nResponse returned after GET request:\n${returnArray}`);
+                    console.info(`\naupamaka :: Response returned after GET request:\n${returnArray}`);
                 }
             } 
         });
@@ -245,7 +248,7 @@ healthcheck(callback) {
    * @param {ServiceNowAdapter~requestCallback} callback - The callback that
    *   handles the response.
    */
-  postRecord(callback) {
+  postRecord1(callback) {
     this.connector.post((results, error) => {
             let result;
              if (results === null)

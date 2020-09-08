@@ -207,9 +207,9 @@ class ServiceNowConnector {
     console.log(getCallOptions.url);
     this.sendRequest(getCallOptions, (results, error)  => {
     if (error) {
-      console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
+      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
-    console.log(`\nResponse returned from POST request:\n${JSON.stringify(results)}`)
+    console.log(`\nResponse returned from GET request:\n${JSON.stringify(results)}`)
   });
   }
 
