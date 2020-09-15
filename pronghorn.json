@@ -34,7 +34,7 @@
         "task": true
         },
        {
-        "name": "postRecord1",
+        "name": "postRecord",
         "summary": "Post Change Tickets",
         "description": "Post changes to Change tickets.",
         "input": [],

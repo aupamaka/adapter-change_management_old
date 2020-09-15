@@ -91,7 +91,9 @@ class ServiceNowConnector {
      callback.error=response.statusCode;
    }
 
+     //callback.data=response.body;
      callback.data=response;
+    console.info("In processRequestResults()");
 
 
     return callback(callback.data, callback.error);
@@ -114,6 +116,8 @@ class ServiceNowConnector {
  */
  sendRequest(callOptions, callback) {
   // Initialize return arguments for callback
+                       console.info("In sendRequest()");
+
   let uri;
   if (callOptions.query)
     uri = this.constructUri(callOptions.serviceNowTable, callOptions.query);
@@ -201,6 +205,7 @@ class ServiceNowConnector {
    * @param {error} callback.error - The error property of callback.
    */
   get(callback) {
+    console.info("In get(callback)");
     let getCallOptions = { ...this.options };
     getCallOptions.method = 'GET';
     getCallOptions.query = 'sysparm_limit=1';
@@ -210,7 +215,10 @@ class ServiceNowConnector {
       console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
     console.log(`\nResponse returned from GET request:\n${JSON.stringify(results)}`)
+    callback(results, error);
   });
+
+
   }
 
 }

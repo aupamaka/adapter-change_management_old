@@ -81,6 +81,7 @@ class ServiceNowAdapter extends EventEmitter {
     // As a best practice, Itential recommends isolating the health check action
     // in its own method.
     this.healthcheck();
+    console.info("In healthcheck ***");
   }
 
   /**
@@ -196,48 +197,50 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     console.info("In getRecord()");
-    this.connector.get((results, error) => {
+     console.info("In getRecord() - AU");
+    this.connector.get((results, error) => 
+    	{
+            console.info("In getRecord() - AU - 1");
             let returnArray = new Array();
             if (results === null) 
             {
                 callback(results, error);
             }
-            else if(results) {
-                if (results.body) {
-                    var resdata = JSON.parse(results.body);
+            else //if(results) 
+            {
+                     console.info("In getRecord() if(results)");
 
-                    for (var i = 0; i < resdata.result.length; i++) {
-                        returnArray.push({
-                            change_ticket_number: resdata.result[i].number,
-                            active: resdata.result[i].active,
-                            priority: resdata.result[i].priority,
-                            description: resdata.result[i].description,
-                            work_start: resdata.result[i].work_start,
-                            work_end: resdata.result[i].work_end,
-                            change_ticket_key: resdata.result[i].sys_id,
-                        });
-                    };
+                var resultsString = JSON.stringify(results);
+                //console.info(`In getRecord() if(results)${resultsString.result}`);
+                console.info(`In getRecord() if(results)${resultsString}`);
+                var bString = JSON.parse(resultsString); 
+                console.info(`In getRecord() bString ${bString}`);
+                var pString = JSON.parse(bString.body); 
+                console.info("In getRecord() pString"+JSON.stringify(pString.result));
+                for(var i in pString.result)
+                {
+                        console.log("i is " + i);
+                        //console.log("pString is " + pString);
+                        console.log("pString is " + pString.result[0]);
+                        var standardizedTicket = 
+                        "{" +"\"change_ticket_number\":"+ 
+                            JSON.stringify(pString.result[i].number) + "," +"\"active\":"+ 
+                            JSON.stringify(pString.result[i].active) + "," +"\"priority\":"+ 
+                            JSON.stringify(pString.result[i].priority) + "," +"\"work_start\": "+ 
+                            JSON.stringify(pString.result[i].work_start) + "," +"\"work_end\": "+ 
+                            JSON.stringify(pString.result[i].work_end) + "," +"\"description\": "+ 
+                            JSON.stringify(pString.result[i].description) + "," +"\"change_ticket_key\": "+ 
+                            JSON.stringify(pString.result[i].sys_id) + "}";
 
-                    callback(returnArray, error);
-                    console.info(`\naupamaka :: Response returned after GET request:\n${returnArray}`);
+                            var parsedStandardTicket = JSON.parse(standardizedTicket);
+                            newTicketArray.result.push(parsedStandardTicket);
                 }
-            } 
-        });
-    /*    
-    const cb = (callback.results, callback.error);
-    connector.get(cb => {
-    if (error) {
-        console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-    }
-    if (results) {
-        console.log(`\nResponse returned from GET request:\n${JSON.stringify(results)}`);
-
-    }
-    }
-    );
-    */
-  }
+                console.info(`\naupamaka :: Response returned after GET request:\n${returnArray}`);
+                //callback(returnArray, error);
+            }
+        }
+   );
+ }
 
   /**
    * @memberof ServiceNowAdapter
@@ -248,7 +251,9 @@ healthcheck(callback) {
    * @param {ServiceNowAdapter~requestCallback} callback - The callback that
    *   handles the response.
    */
-  postRecord1(callback) {
+  postRecord(callback) {
+           console.info("In postRecord()");
+
     this.connector.post((results, error) => {
             let result;
              if (results === null)
